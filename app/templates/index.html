@@ -1,41 +1,57 @@
 {% extends 'base.html'%}
 {% import 'macros.html' as macro%}
 
+<!-- Styles block -->
+
 {% block styles%}
-{{ super() }}
-<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
 {% endblock %}
 <!-- Content block -->
-<div class="container movies">
-    {% block content %}
-    <!-- {{ super() }}
-    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}"> -->
+{% block content %}
 
-    <!-- Popular movie -->
-    <div class="container">
-        <form>
-            <input type="text" name="movie_query" placeholder="Search for a Movie" class="form-control">
-            <input type="submit"  value="Submit" class="btn btn-default">
-        </form>
-    
-    </div>
-    <div class="container">
-        <h3> Popular Movies</h3>
+<div class="container">
 
-        <p>{{ macro.displayMovieList(popular)}} </p>
-        <!-- Upcoming movie  -->
-        <h3> Upcoming Movies </h3>
-
-        <p>{{ macro.displayMovieList(upcoming)}}</p><br><br>
-
-        <!-- Now showing movie -->
-        <h3>Now Showing</h3>
-
-        <p>{{ macro.displayMovieList(now_showing)}}</p>
-
-
-    </div>
-    {% endblock%}
-
+  {% if current_user.is_authenticated%}
+    <h1>Hello {{current_user.username}}</h1>
+  {% else %}
+  {%endif%}
+    <form>
+        <input type="text" name="movie_query" placeholder="Search for a Movie" class="form-control">
+        <input type="submit"  value="Submit" class="btn btn-default">
+    </form>
 
 </div>
+
+<div class="container">
+
+    <!-- Popular movie -->
+    <div class="row">
+        <h3> Popular Movies</h3>
+        <ul>
+            {{ macro.displayMovieList(popular)}}
+        </ul>
+    </div>
+    <!-- Upcoming movie  -->
+    <div class="row">
+
+        <h3> Upcoming Movies </h3>
+        <ul>
+            {{ macro.displayMovieList(upcoming)}}
+        </ul>
+    </div>
+
+    <!-- Now showing movie -->
+    <div class="row">
+
+        <h3>Now Showing</h3>
+        <ul>
+            {{ macro.displayMovieList(now_showing)}}
+        </ul>
+    </div>
+
+</div>
+
+
+
+{% endblock%}
